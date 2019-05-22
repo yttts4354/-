@@ -3,22 +3,25 @@
 #그래프도 출력
 
 
-vi = int(input("초기속력을 입력하세요:"))
-a = int(input("가속도를 입력하세요:"))
+vi = int(input("초기속력을 입력하세요:")) 
+a = int(input("가속도를 입력하세요:")) 
+vf = int(input("최종속력을 입력하세요:")) 
 t = int(input("진행시간을 입력하세요:"))
 
-vf = vi + a*t
+if a == 0 :
+    a = (vf - vi) / t 
+    print("가속도는", a, "m/s^2 입니다.") 
+if vf == 0 :
+    vf = vi + a*t 
+    print("최종속력은", vf, "m/s 입니다.")
 
-print("최종속력은", vf, "m/s 입니다.")
-
-from matplotlib import pyplot as plt
-from matplotlib import font_manager, rc
-font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name()
+from matplotlib import pyplot as plt 
+from matplotlib import font_manager, rc 
+font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
 rc('font', family=font_name)
 
-
-plt.plot([0,t+1],[vi,vf])
-plt.xlabel('time(s)')
+plt.plot([0,t+1],[vi,vf]) 
+plt.xlabel('time(s)') 
 plt.ylabel('velocity(m/s**2)')
 plt.title('등가속도 운동 그래프')
 plt.show()
