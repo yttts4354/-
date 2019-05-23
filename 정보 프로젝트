@@ -22,6 +22,6 @@ rc('font', family=font_name)
 
 plt.plot([0,t+1],[vi,vf]) 
 plt.xlabel('time(s)') 
-plt.ylabel('velocity(m/s**2)')
+plt.ylabel('velocity(m/s)')
 plt.title('등가속도 운동 그래프')
 plt.show()
