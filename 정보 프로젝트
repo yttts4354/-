@@ -4,47 +4,50 @@
 
 
 #입력, 계산부
+
 vi = int(input("초기속력을 입력하세요:"))
-a = int(input("가속도를 입력하세요:"))
-vf = int(input("최종속력을 입력하세요:"))
 t = int(input("진행시간을 입력하세요:"))
+aaaaa = int(input("1.가속도와 2.최종속력 중 어느 값을 입력할 건지 정해주세요 입력 (예) 1) :"))
 
-if a != 0 and vf!=0 :
-    print('가속도와 최종속력 둘중 하나는 0이어야 합니다.')
-    
-    
-if a == 0 :
-    a = (vf - vi) / t
-    d = (vf**2 - vi**2) / (2*a)
-    print("가속도는", a, "m/s^2 입니다.")
-    print("이동거리는", abs(d), "m 입니다.")
-    #그래프부
-    from matplotlib import pyplot as plt 
-    from matplotlib import font_manager, rc 
-    font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
-    rc('font', family=font_name)
+if aaaaa == 1 :
+    a = int(input("가속도를 입력하세요:"))
+    if t!=0 :
+        d = (vf**2 - vi**2) / (2*a)
+        print("가속도는", a, "m/s^2 입니다.")
+        print("이동거리는", abs(d), "m 입니다.")
+        #그래프부
+        from matplotlib import pyplot as plt 
+        from matplotlib import font_manager, rc 
+        font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
+        rc('font', family=font_name)
 
 
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
-    plt.show()
+        plt.plot([0,t],[vi,vf]) 
+        plt.xlabel('time(s)') 
+        plt.ylabel('velocity(m/s)')
+        plt.title('등가속도 운동 그래프') 
+        plt.show()
+    else :
+        print('오류입니다.')
 
-if vf == 0 :
-    vf = vi + a*t
-    d = (vf**2 - vi**2) / (2*a)  
-    print("최종속력은", vf, "m/s 입니다.")  
-    print("이동거리는", abs(d), "m 입니다.")
-    #그래프부
-    from matplotlib import pyplot as plt 
-    from matplotlib import font_manager, rc 
-    font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
-    rc('font', family=font_name)
+if aaaaa == 2 :
+    vf = int(input("최종속력을 입력하세요:"))
+    if vf!=vi and t!=0 :
+        a = (vf - vi) / t
+        d = (vf**2 - vi**2) / (2*a)
+        print("가속도는", a, "m/s^2 입니다.")
+        print("이동거리는", abs(d), "m 입니다.")
+        #그래프부
+        from matplotlib import pyplot as plt 
+        from matplotlib import font_manager, rc 
+        font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
+        rc('font', family=font_name)
 
 
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
-    plt.show()
+        plt.plot([0,t],[vi,vf]) 
+        plt.xlabel('time(s)') 
+        plt.ylabel('velocity(m/s)')
+        plt.title('등가속도 운동 그래프') 
+        plt.show()
+    else :
+        print('오류입니다!!')
