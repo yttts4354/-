@@ -8,7 +8,7 @@ rc('font', family=font_name)
 #공식에 대입해서 평균속력, 이동거리, 최종속력(가속도)
 #그래프도 출력
 
-
+import numpy as np
 #입력, 계산부
 vi = int(input("초기속력을 입력하세요:"))
 a = int(input("가속도를 입력하세요:"))
@@ -30,6 +30,14 @@ if a == 0 :
     plt.ylabel('velocity(m/s)')
     plt.title('등가속도 운동 그래프') 
     plt.show()
+    
+    x = np.arange(0, t, 0.01)
+    y = vi*x + 0.5*a*x**2
+    plt.plot(x,y)
+    plt.xlabel('time(s)')
+    plt.ylabel('distance(m)')
+    plt.title('시간-거리 그래프')
+    plt.show()
 
 if vf == 0 :
     vf = vi + a*t
@@ -41,4 +49,12 @@ if vf == 0 :
     plt.xlabel('time(s)') 
     plt.ylabel('velocity(m/s)')
     plt.title('등가속도 운동 그래프') 
+    plt.show()
+    
+    x = np.arange(0, t, 0.01)
+    y = vi*x + 0.5*a*x**2
+    plt.plot(x,y)
+    plt.xlabel('time(s)')
+    plt.ylabel('distance(m)')
+    plt.title('시간-거리 그래프')
     plt.show()
