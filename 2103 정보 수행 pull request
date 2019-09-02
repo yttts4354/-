@@ -1,0 +1,147 @@
+#이동 거리, 가속도, 초기 속력, 나중 속력, 시간 중 세 개의 변수를 알면 다른 값을 구할 수 있음
+
+from matplotlib import pyplot as plt 
+from matplotlib import font_manager, rc 
+font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
+rc('font', family=font_name)
+
+
+x = input('알고있는 변수 3개를 순서에 맞게 입력해주세요. 아닌 변수는 .을 입력해주세요. 띄어쓰기로 나누어주세요. 가능하지 않은 조합은 에러가 납니다 (이동거리 가속도 초기속력 나중속력 시간) : ')
+
+# '.' 으로 입력해 모르는 미지수 2개로 인한 10가지 경우마다 방정식을 푼 것
+
+a = x.split(' ')
+b = []
+
+if a[0] == '.' and a[1] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+    a[1] = (a[3] - a[2]) / a[4]
+    a[0] = a[2]*a[4] + 0.5*a[1]*a[4]**2
+    
+    
+if a[0] == '.' and a[2] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[2] = a[3]-a[4]*a[1]
+    a[0] = a[2]*a[4] + 0.5*a[1]*a[4]**2
+    
+if a[0] == '.' and a[3] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[3] = a[2] + a[1]*a[4]
+    a[0] = a[2]*a[4] + 0.5*a[1]*a[4]**2
+    
+if a[0] == '.' and a[4] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[4] = (a[3] - a[2]) / a[1]
+    a[0] = a[2]*a[4] + 0.5*a[1]*a[4]**2
+
+#루트가 들어가는 경우 플러스와 마이너스가 모두 나오므로 두 종류를 만듦
+
+if a[1] == '.' and a[2] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[1] = ((2*a[4]*a[3]-2*a[1])/a[4])**0.5
+    a[2] = a[3]-a[1]*a[4]
+
+    b.append(a[0])
+    b.append(a[1]*(-1))
+    b.append(a[3]+a[1]*a[4])
+    b.append(a[3])
+    b.append(a[4])
+    
+if a[1] == '.' and a[3] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[1] = 2*(a[0]-a[4]*a[2])/a[4]**2
+    a[3] = a[2]+a[1]*a[4]
+    
+if a[1] == '.' and a[4] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[4] = 2*a[0]/(a[2]+a[3])
+    a[1] = (a[3]-a[2])/a[4]
+    
+if a[2] == '.' and a[3] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[3] = (a[1]**2*a[4]+2*a[0])/(a[4]*2)
+    a[2] = a[3]-a[4]*a[1]
+
+if a[2] == '.' and a[4] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[2] = (a[3]**2-2*a[1]*a[0])**0.5
+    a[4] = (a[3]-a[2])/a[1]
+
+    b.append(a[0])
+    b.append(a[1])
+    b.append(a[2]*(-1))
+    b.append(a[3])
+    b.append((a[3]+a[2])/a[1])
+
+if a[3] == '.' and a[4] == '.' :
+    for i in range(5) :
+        if a[i] != '.' :
+            a[i] = float(a[i])
+            
+    a[3] = (2*a[1]*a[0]+a[2]**2)**0.5
+    a[4] = (a[3]-a[2])/a[1]
+
+    b.append(a[0])
+    b.append(a[1])
+    b.append(a[2])
+    b.append(a[3]*(-1))
+    b.append((b[3]+a[2])/a[1])
+    
+print(a)
+
+#이동 거리에 대한 그래프를 b가 있으면 두개, 없으면 한 개만 그래프를 그림.
+if len(b) != 0 :
+    print(b)
+
+ta = [0]
+xa = [0]
+
+tb = [0]
+xb = [0]
+
+for i in range(100) :
+    t = a[4]*(i+1)/100
+    ta.append(t)
+    xa.append(a[2]*t+0.5*a[1]*t**2)
+
+plt.plot(ta, xa)
+plt.xlabel('시간(초)')
+plt.ylabel('거리(m)')
+plt.title('등가속도 운동 양상1')
+plt.show()
+if len(b) != 0 :
+    for i in range(100) :
+        t = b[4]*(i+1)/100
+        tb.append(t)
+        xb.append(b[2]*t+0.5*b[1]*t**2)
+    plt.plot(tb, xb)
+    plt.xlabel('시간(초)')
+    plt.ylabel('거리(m)')
+    plt.title('등가속도 운동 양상2')
+    plt.show()
