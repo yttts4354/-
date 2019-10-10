@@ -20,41 +20,41 @@ if a != 0 and vf!=0 :
     
     
 if a == 0 :
-    a = (vf - vi) / t
-    d = (vf**2 - vi**2) / (2*a)
+    a = (vf - vi) / t  #가속도 정의 
+    d = (vf**2 - vi**2) / (2*a) #이동거리
     print("가속도는", a, "m/s^2 입니다.")
     print("이동거리는", abs(d), "m 입니다.")
     #그래프부
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
-    plt.show()
+    plt.plot([0,t],[vi,vf]) #x축, y축 데이터 지정
+    plt.xlabel('time(s)')  #x축 이름(시간)
+    plt.ylabel('velocity(m/s)') #y축 이름(속도)
+    plt.title('등가속도 운동 그래프')  #그래프 제목
+    plt.show() # 그래프 출력
     
-    x = np.arange(0, t, 0.01)
-    y = vi*x + 0.5*a*x**2
-    plt.plot(x,y)
-    plt.xlabel('time(s)')
-    plt.ylabel('distance(m)')
-    plt.title('시간-거리 그래프')
-    plt.show()
+    x = np.arange(0, t, 0.01)  #0에서 t까지 0.01간격으로
+    y = vi*x + 0.5*a*x**2  #이동 거리 s = vx + 0.5at^2
+    plt.plot(x,y) #x축, y축 데이터 지정
+    plt.xlabel('time(s)') #x축 이름
+    plt.ylabel('distance(m)') #y축 이름
+    plt.title('시간-거리 그래프') #그래프 제목
+    plt.show() #그래프 출력
 
 if vf == 0 :
-    vf = vi + a*t
+    vf = vi + a*t  #v나중 = v초기 + 가속도x시간
     d = (vf**2 - vi**2) / (2*a)  
     print("최종속력은", vf, "m/s 입니다.")  
     print("이동거리는", abs(d), "m 입니다.")
     #그래프부
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
-    plt.show()
+    plt.plot([0,t],[vi,vf]) #x축, y축데이터
+    plt.xlabel('time(s)') #x축 이름
+    plt.ylabel('velocity(m/s)') #y축 이름
+    plt.title('등가속도 운동 그래프') #그래프 제목
+    plt.show() #그래프 출력
     
     x = np.arange(0, t, 0.01)
     y = vi*x + 0.5*a*x**2
-    plt.plot(x,y)
-    plt.xlabel('time(s)')
-    plt.ylabel('distance(m)')
-    plt.title('시간-거리 그래프')
-    plt.show()
+    plt.plot(x,y) #x축, y축 데이터
+    plt.xlabel('time(s)') #x축 이름
+    plt.ylabel('distance(m)') #y축 이름
+    plt.title('시간-거리 그래프') #그래프 제목
+    plt.show() #그래프 출력
