@@ -10,6 +10,7 @@ rc('font', family=font_name)
 
 import numpy as np
 #입력, 계산부
+print('모르는 변수를 0 으로 입력하시오')
 vi = int(input("초기속력을 입력하세요:"))
 a = int(input("가속도를 입력하세요:"))
 vf = int(input("최종속력을 입력하세요:"))
@@ -20,8 +21,8 @@ if a != 0 and vf!=0 :
     
     
 if a == 0 :
-    a = (vf - vi) / t
-    d = (vf**2 - vi**2) / (2*a)
+    a = (vf - vi) / t   # vf=vi+at
+    d = (vf**2 - vi**2) / (2*a)   # 2ad=vf^2-vi^2
     print("가속도는", a, "m/s^2 입니다.")
     print("이동거리는", abs(d), "m 입니다.")
     #그래프부
@@ -32,7 +33,7 @@ if a == 0 :
     plt.show()
     
     x = np.arange(0, t, 0.01)
-    y = vi*x + 0.5*a*x**2
+    y = vi*x + 0.5*a*x**2   # d=vit+0.5at^2
     plt.plot(x,y)
     plt.xlabel('time(s)')
     plt.ylabel('distance(m)')
@@ -40,8 +41,8 @@ if a == 0 :
     plt.show()
 
 if vf == 0 :
-    vf = vi + a*t
-    d = (vf**2 - vi**2) / (2*a)  
+    vf = vi + a*t   # vf=vi+at
+    d = (vf**2 - vi**2) / (2*a)   # 2ad=vf^2-vi^2  
     print("최종속력은", vf, "m/s 입니다.")  
     print("이동거리는", abs(d), "m 입니다.")
     #그래프부
@@ -52,7 +53,7 @@ if vf == 0 :
     plt.show()
     
     x = np.arange(0, t, 0.01)
-    y = vi*x + 0.5*a*x**2
+    y = vi*x + 0.5*a*x**2   # d=vit+0.5at^2
     plt.plot(x,y)
     plt.xlabel('time(s)')
     plt.ylabel('distance(m)')
