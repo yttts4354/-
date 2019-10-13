@@ -1,60 +1,100 @@
 from matplotlib import pyplot as plt 
 from matplotlib import font_manager, rc 
+import numpy as np
 
-font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name() 
+font_name = font_manager.FontProperties(fname="C:\Windows\Fonts\malgun.ttf").get_name() 
 rc('font', family=font_name)
 
-#초기속력, 가속도(최종속력), 진행시간 입력
-#공식에 대입해서 평균속력, 이동거리, 최종속력(가속도)
-#그래프도 출력
+# 초기속력, 가속도(최종속력), 진행시간 입력
+# 공식에 대입해서 평균속력, 이동거리, 최종속력(가속도)
+# 그래프도 출력
 
-import numpy as np
-#입력, 계산부
-vi = int(input("초기속력을 입력하세요:"))
-a = int(input("가속도를 입력하세요:"))
-vf = int(input("최종속력을 입력하세요:"))
-t = int(input("진행시간을 입력하세요:"))
+# 여러 개의 물체에 대해 입력받으므로 각 물체의 정보를 list에 저장
+vi = []
+vf = []
+a = []
+d = []
 
-if a != 0 and vf!=0 :
-    print('가속도와 최종속력 둘중 하나는 0이어야 합니다.')
+# 입력받는 부분
+num = int(input("물체의 개수를 입력해 주세요 : "))
+# 가속도/최종속도 둘 중 하나만 입력받게 하기 위해 조건을 추가하였다.
+conv = int(input("가속도 입력을 원하면 1을, 최종 속력 입력을 원하면 2를 입력해 주세요 : "))
+
+# 모든 물체들에 대해서 값을 입력받아 준다.
+for i in range(num):
+    print(i+1,"번째 물체에 대해 입력해 주세요.")
+    vi.append(int(input("초기속도를 입력하세요 : ")))
+    if conv == 1 :
+        a.append(int(input("가속도를 입력하세요 : ")))
+    if conv == 2:
+        vf.append(int(input("최종속력을 입력하세요 : ")))
+t = int(input("진행시간을 입력하세요 : "))
+
+# 가속도를 입력한 경우
+if conv == 1:
+    for i in range(num):
+        # 각 물체별로 처리
+        vin = vi[i]
+        an = a[i] # 현재 처리하고 있는 물체의 초기 속력과 가속도
+        vf.append(round(vin + an * t, 2))
+        d.append(round((vf[i] ** 2 - vin ** 2) / (2 * an), 2)) # 계산식을 통해 최종속도와 이동거리 계산
+        print("물체",i+1,"의 최종속력은", vf[i], "m/s 입니다.")  
+        print("물체",i+1,"의 이동거리는", abs(d[i]), "m 입니다.")
+        # 그래프 1 : v-t 그래프
+        plt.plot([0, t], [vin, vf[i]])
+        # plt.plot([0, tn], [vin, vf[i]], 'bo')
+    plt.xlabel('time (s)') 
+    plt.ylabel('velocity (m/s)') # x축, y축 추가
+    plt.legend(range(1, i+2), loc = 'upper left') # 범례 추가
+    plt.title('시간 - 속도 그래프')
+    plt.show()
+
+    # 그래프 2 : x-t 그래프
+    x = np.arange(0, t, 0.01) # 0.01 초로 시간 간격 설정
+    for i in range(num):
+        vin = vi[i]
+        an = a[i] # 현재 처리하고 있는 물체의 초기 속력과 가속도
+        y = vin * x + 0.5 * an * x ** 2 # 계산식을 통해서 시간에 대한 이동 거리 계산 및 그래프에 도시
+        plt.plot(x, y)
+        # plt.plot([0, t], [0, vin * t + 0.5 * an * t ** 2], 'bo')
+    plt.xlabel('time (s)')
+    plt.ylabel('distance (m)')
+    plt.legend(range(1, i+2), loc = 'upper left') # x축, y축, 범례 추가
+    plt.title('시간 - 위치 그래프')
+    plt.show()
     
-    
-if a == 0 :
-    a = (vf - vi) / t
-    d = (vf**2 - vi**2) / (2*a)
-    print("가속도는", a, "m/s^2 입니다.")
-    print("이동거리는", abs(d), "m 입니다.")
-    #그래프부
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
+# 최종속도를 입력한 경우
+if conv == 2:
+    for i in range(num):
+        vfn = vf[i]
+        vin = vi[i] # 현재 처리하고 있는 물체의 초기/나중 속력 
+        an = round((vfn - vin) / t, 2)
+        a.append(an) # 계산한 가속도 값을 list에 추가해 물체별로 저장 (향후 x-t그래프 출력 시 사용)
+        d = round((vfn ** 2 - vin ** 2) / (2 * an), 2) 
+        # round 함수를 추가하여서 반올림
+        
+        print("물체",i+1,"의 가속도는", an, "m/s^2 입니다.")
+        print("물체",i+1,"의 이동거리는", abs(d), "m 입니다.")
+
+        # 그래프 1 : v-t 그래프
+        plt.plot([0, t], [vin, vfn]) 
+        #plt.plot([0, t], [vin, vfn], 'bo')
+    plt.xlabel('time (s)') 
+    plt.ylabel('velocity (m/s)')
+    plt.legend(range(1, i+2), loc = 'upper left') # x축, y축, 범례 추가
+    plt.title('시간 - 속도 그래프') 
     plt.show()
     
     x = np.arange(0, t, 0.01)
-    y = vi*x + 0.5*a*x**2
-    plt.plot(x,y)
-    plt.xlabel('time(s)')
-    plt.ylabel('distance(m)')
-    plt.title('시간-거리 그래프')
-    plt.show()
-
-if vf == 0 :
-    vf = vi + a*t
-    d = (vf**2 - vi**2) / (2*a)  
-    print("최종속력은", vf, "m/s 입니다.")  
-    print("이동거리는", abs(d), "m 입니다.")
-    #그래프부
-    plt.plot([0,t],[vi,vf]) 
-    plt.xlabel('time(s)') 
-    plt.ylabel('velocity(m/s)')
-    plt.title('등가속도 운동 그래프') 
-    plt.show()
-    
-    x = np.arange(0, t, 0.01)
-    y = vi*x + 0.5*a*x**2
-    plt.plot(x,y)
-    plt.xlabel('time(s)')
-    plt.ylabel('distance(m)')
-    plt.title('시간-거리 그래프')
-    plt.show()
+    for i in range(num):
+        vin = vi[i]
+        an = a[i] # 현재 처리하고 있는 물체의 초기 속력과 가속도
+    # 그래프 2 : x-t 그래프
+        y = vin * x + 0.5 * an * x ** 2 # 이동 거리 계산 (계산식 사용)
+        plt.plot(x, y)
+        #plt.plot([0, t], [0, vin * t + 0.5 * an * t ** 2], 'bo')
+    plt.xlabel('time (s)')
+    plt.ylabel('distance (m)')
+    plt.title('시간 - 위치 그래프')
+    plt.legend(range(1, i+2), loc = 'upper left')
+    plt.show() # 그래프 완성 및 출력
